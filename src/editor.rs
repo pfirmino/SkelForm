@@ -6,6 +6,7 @@ use std::collections::HashMap;
 use std::str::FromStr;
 
 const MIN_ZOOM: f32 = 1.;
+const PIXEL_ALPHA_CLIP_THRESHOLD:u8 = 1;
 
 pub fn iterate_events(
     input: &InputStates,
@@ -1893,7 +1894,7 @@ pub fn triangulate(verts: &Vec<Vertex>, tex: &image::DynamicImage) -> Vec<u32> {
                 );
                 let pixel_alpha =
                     image::GenericImageView::get_pixel(tex, pos.x as u32, pos.y as u32).0[3];
-                if pixel_alpha > 125 {
+                if pixel_alpha > PIXEL_ALPHA_CLIP_THRESHOLD {
                     indices.push(tri_indices[0] as u32);
                     indices.push(tri_indices[1] as u32);
                     indices.push(tri_indices[2] as u32);
